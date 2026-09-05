@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="dark" />
 <title>UPSHIFT Portal · NICTSeD 2026</title>
-<meta name="description" content="Navigation portal for the UPSHIFT web deck: 42 slides across 8 acts, the FAQ form and the repository. Team A, SMK St Bernadette's Convent, Perak." />
+<meta name="description" content="Navigation portal for the UPSHIFT web deck: 42 slides across 8 acts, the FAQ form and the repository. Team B, SMK St Bernadette's Convent, Perak." />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="UPSHIFT Portal · NICTSeD 2026" />
-<meta property="og:description" content="Slide navigation, FAQ form and repository for the UPSHIFT semifinal deck. Team A, SMK St Bernadette's Convent, Perak." />
+<meta property="og:description" content="Slide navigation, FAQ form and repository for the UPSHIFT semifinal deck. Team B, SMK St Bernadette's Convent, Perak." />
 <meta property="og:url" content="https://brotaufik.github.io/" />
 <meta property="og:image" content="https://brotaufik.github.io/og.jpg" />
 <meta property="og:image:width" content="1200" />
@@ -124,6 +124,11 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 .btn.gold:hover{background:rgba(242,178,51,.24)}
 .btn .lb{display:inline}
 .now{flex:1;min-width:0;padding:0 6px}
+.pips{display:flex;align-items:center;gap:5px;padding:0 3px;flex:0 0 auto}
+.pip{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.20);transition:background .15s,transform .15s;flex:0 0 auto}
+.pip:hover{background:rgba(255,255,255,.45);transform:scale(1.25)}
+.pip.on{background:var(--cyan);transform:scale(1.25)}
+.pips.single{display:none}
 .now b{display:block;font-size:13.5px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .now small{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .burger{display:none}
@@ -193,7 +198,7 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
           <p class="ev">NICTSeD 2026 · Semifinals</p>
         </div>
       </div>
-      <p class="team">The Automated Financial Sector<br><b>Team A</b> · SMK St Bernadette's Convent, Perak · AEB2064</p>
+      <p class="team">The Automated Financial Sector<br><b>Team B</b> · SMK St Bernadette's Convent, Perak · AEB2064</p>
     </div>
 
     <div class="search">
@@ -230,10 +235,11 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
         <b id="nowT">The Automated Financial Sector</b>
         <small id="nowS">Slide 1 of 42 · Act 1 · The Human Absence</small>
       </div>
-      <button class="btn" id="prev" title="Previous slide">
+      <button class="btn" id="prev" title="Previous build (←)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <button class="btn" id="next" title="Next slide">
+      <div class="pips" id="pips" role="group" aria-label="Builds on this slide"></div>
+      <button class="btn" id="next" title="Next build (→)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <button class="btn gold" id="faqBtn" title="FAQ form and QR code">
@@ -292,7 +298,7 @@ const LINKS=[
    ic:'<path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h13A1.5 1.5 0 0 1 18 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 20h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'},
   {t:'FAQ form',s:'forms.gle/kymW1VEAELBHAVYa9',href:'https://forms.gle/kymW1VEAELBHAVYa9',ext:true,
    ic:'<rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'},
-  {t:'Slide 42 · QR',s:'Jump the deck to the QR slide',slide:42,build:1,
+  {t:'Slide 42 · QR',s:'Jumps to build 2, where the QR shows',slide:42,build:1,
    ic:'<rect x="3" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 14h3v3h-3z" stroke="currentColor" stroke-width="1.8"/>'},
   {t:'Repository',s:'github.com/BroTaufik/upshift-deck',href:'https://github.com/BroTaufik/upshift-deck',ext:true,
    ic:'<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 19 4.8a4.9 4.9 0 0 0-.1-3.6s-1.1-.3-3.7 1.4a12.6 12.6 0 0 0-6.6 0C6 .9 4.9 1.2 4.9 1.2A4.9 4.9 0 0 0 4.8 4.8 5.2 5.2 0 0 0 3.4 8.6c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 0 0-.9 2.6V22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,1)"/>'},
@@ -300,7 +306,7 @@ const LINKS=[
 
 const $=s=>document.querySelector(s), el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e};
 const frame=$('#deck'), nav=$('#nav');
-let cur=1, sameOrigin=null;
+let cur=1, curB=0, sameOrigin=null;
 
 /* ---------- build the Links cluster ---------- */
 (function(){
@@ -349,6 +355,7 @@ function probe(){
 }
 function go(n,b){
   n=Math.min(42,Math.max(1,n));
+  b=Math.min(SLIDES[n-1].builds-1,Math.max(0,b|0));
   const hash='#s'+n+(b?'.'+b:'');
   if(probe()){
     try{ frame.contentWindow.location.hash=hash; }
@@ -356,20 +363,25 @@ function go(n,b){
   } else {
     frame.src=DECK+'?hub=1'+hash;
   }
-  setCur(n); showDeck();
+  setCur(n,b); showDeck();
   if(window.matchMedia('(max-width:860px)').matches) closeSide();
 }
-function setCur(n){
-  cur=n;
+function setCur(n,b){
   const s=SLIDES[n-1]; if(!s) return;
+  cur=n; curB=Math.min(s.builds-1,Math.max(0,b|0));
   $('#nowT').textContent=s.title;
-  $('#nowS').textContent='Slide '+n+' of 42 · Act '+s.act+' · '+ACTS[s.act];
+  $('#nowS').textContent='Slide '+n+' of 42 · Act '+s.act+' · '+ACTS[s.act]+(s.builds>1?' · build '+(curB+1)+'/'+s.builds:'');
+  const pw=$('#pips'); pw.classList.toggle('single',s.builds<2); pw.innerHTML='';
+  if(s.builds>1) for(let i=0;i<s.builds;i++){
+    const d=el('button','pip'+(i===curB?' on':'')); d.title='Build '+(i+1)+' of '+s.builds;
+    d.setAttribute('aria-label','Go to build '+(i+1)); d.addEventListener('click',()=>go(n,i)); pw.appendChild(d);
+  }
   document.querySelectorAll('.sl').forEach(b=>b.classList.toggle('cur',+b.dataset.n===n));
   document.querySelectorAll('.act').forEach(d=>{
     const on=+d.dataset.act===s.act; d.classList.toggle('on',on);
     if(on && !d.open && !$('#q').value.trim()) d.open=true;
   });
-  $('#prev').disabled=n<=1; $('#next').disabled=n>=42;
+  $('#prev').disabled=(n<=1&&curB<=0); $('#next').disabled=(n>=42&&curB>=s.builds-1);
   const c=document.querySelector('.sl.cur');
   if(c){ const r=c.getBoundingClientRect(), nr=nav.getBoundingClientRect();
     if(r.top<nr.top+8||r.bottom>nr.bottom-8) c.scrollIntoView({block:'nearest'}); }
@@ -379,8 +391,8 @@ setInterval(()=>{
   if(!probe()) return;
   try{
     const h=frame.contentWindow.location.hash||'';
-    const m=/^#s(\d+)/.exec(h);
-    if(m && +m[1]!==cur) setCur(+m[1]);
+    const m=/^#s(\d+)(?:\.(\d+))?/.exec(h);
+    if(m){ const n=+m[1], b=+(m[2]||0); if(n!==cur||b!==curB) setCur(n,b); }
   }catch(e){ sameOrigin=false; }
 },450);
 
@@ -392,11 +404,18 @@ $('#faqBtn').addEventListener('click',()=>{
 });
 $('#toSlide42').addEventListener('click',()=>go(42,1));
 $('#home').addEventListener('click',()=>{ go(1,0); showDeck(); });
-$('#prev').addEventListener('click',()=>go(cur-1,0));
-$('#next').addEventListener('click',()=>go(cur+1,0));
+function stepBuild(d){
+  let n=cur, b=curB+d;
+  if(b<0){ if(n<=1) return; n--; b=SLIDES[n-1].builds-1; }
+  else if(b>SLIDES[n-1].builds-1){ if(n>=42) return; n++; b=0; }
+  go(n,b);
+}
+function stepSlide(d){ go(cur+d,0); }
+$('#prev').addEventListener('click',()=>stepBuild(-1));
+$('#next').addEventListener('click',()=>stepBuild(1));
 
 /* keep the Present button pointing at the current slide, without ?hub */
-function syncPresent(){ $('#openFull').href=DECK+'#s'+cur; }
+function syncPresent(){ $('#openFull').href=DECK+'#s'+cur+(curB?'.'+curB:''); }
 setInterval(syncPresent,500); syncPresent();
 
 /* ---------- expand / collapse all ---------- */
@@ -439,10 +458,12 @@ addEventListener('keydown',e=>{
   if(e.key==='/'&&!typing){ e.preventDefault(); $('#q').focus(); return; }
   if(e.key==='Escape'&&typing){ $('#q').value=''; $('#q').dispatchEvent(new Event('input')); $('#q').blur(); return; }
   if(typing) return;
-  if(e.key==='ArrowRight'||e.key==='PageDown'){ e.preventDefault(); go(cur+1,0); }
-  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); go(cur-1,0); }
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); stepBuild(1); }
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); stepBuild(-1); }
+  else if(e.key==='ArrowDown'){ e.preventDefault(); stepSlide(1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); stepSlide(-1); }
   else if(e.key==='Home'){ e.preventDefault(); go(1,0); }
-  else if(e.key==='End'){ e.preventDefault(); go(42,0); }
+  else if(e.key==='End'){ e.preventDefault(); go(42,SLIDES[41].builds-1); }
 });
 
 /* ---------- copy ---------- */
@@ -463,7 +484,7 @@ $('#scrim').addEventListener('click',closeSide);
 frame.addEventListener('load',()=>{ $('#load').classList.add('gone'); probe(); });
 setTimeout(()=>$('#load').classList.add('gone'),4000);
 $('#qrFaq').innerHTML=QR_FAQ;
-setCur(1);
+setCur(1,0);
 </script>
 </body>
 </html>

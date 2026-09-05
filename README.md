@@ -1,7 +1,7 @@
 # UPSHIFT Portal · NICTSeD 2026
 
 Navigation dashboard for the UPSHIFT semifinal web deck.
-Team A · SMK St Bernadette's Convent, Perak · AEB2064.
+Team B · SMK St Bernadette's Convent, Perak · AEB2064.
 
 **Live:** https://brotaufik.github.io/
 
