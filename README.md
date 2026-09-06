@@ -17,12 +17,13 @@ deck stay in sync in both directions: advancing inside the deck highlights the m
 - **Present** opens the deck full screen in a new tab, without portal chrome, for the actual run
 
 ## Links it carries
+The GitHub repository link is deliberately not in the panel: the portal is shown on stage, so it carries only what an audience needs.
+
 | | |
 |---|---|
 | Deck live | https://brotaufik.github.io/upshift-deck/ |
 | FAQ form (slide 42 QR) | https://forms.gle/kymW1VEAELBHAVYa9 |
 | Slide 42 · QR | https://brotaufik.github.io/upshift-deck/#s42.1 |
-| Repository | https://github.com/BroTaufik/upshift-deck |
 
 `?hub=1` on the deck URL adds a small **Portal** button to the deck itself, so a full-tab deck opened
 from here can return. The plain deck URL never shows it, keeping the presentation clean.
