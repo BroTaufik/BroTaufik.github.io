@@ -327,7 +327,7 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
             </div>
             <div class="wall-act">
               <button class="btn" id="wallRefresh">Refresh now</button>
-              <button class="btn" id="wallToggleHid" hidden>Show hidden (<span id="wallHidN">0</span>)</button>
+              <button class="btn" id="wallToggleHid" hidden>Show hidden (0)</button>
             </div>
           </div>
           <div class="wall-list" id="wallList"></div>
@@ -568,7 +568,7 @@ function wallRender(){
   const list=$('#wallList');
   const shown=wallRows.filter(r=>wallShowHid||!wallHid.has(wallKey(r)));
   const nHid=wallRows.filter(r=>wallHid.has(wallKey(r))).length;
-  const tg=$('#wallToggleHid'); tg.hidden=!nHid; $('#wallHidN').textContent=nHid;
+  const tg=$('#wallToggleHid'); tg.hidden=!nHid;
   tg.textContent=(wallShowHid?'Hide again (':'Show hidden (')+nHid+')';
   const live=wallRows.length-nHid;
   const cnt=$('#wallCnt'); cnt.hidden=!live; cnt.textContent=live;
