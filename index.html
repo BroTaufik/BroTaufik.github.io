@@ -160,6 +160,38 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 .steps .num{flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:rgba(34,211,238,.16);color:var(--cyan);
   display:grid;place-items:center;font-size:11.5px;font-weight:700}
 
+/* Audience question wall */
+.wall{position:absolute;inset:0;overflow-y:auto;background:var(--navy-900);padding:30px;display:none}
+.wall.on{display:block}
+.wall-in{max-width:1000px;margin:0 auto}
+.wall-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.wall h2{margin:0 0 6px;font-size:26px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.wall-hd p{margin:0;color:#B8C6E0;font-size:13.5px;max-width:62ch}
+.wall-act{display:flex;gap:8px;flex-wrap:wrap}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--emerald);background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.32);
+  border-radius:999px;padding:3px 10px}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--emerald);animation:pulse 1.9s infinite}
+.live.off{color:var(--coral);background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.34)}
+.live.off::before{background:var(--coral);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.wall-list{display:grid;gap:12px}
+.qcard{position:relative;padding:16px 52px 15px 18px;background:rgba(255,255,255,.045);border:1px solid var(--line);
+  border-left:3px solid var(--cyan);border-radius:12px}
+.qcard.hid{opacity:.42;border-left-color:var(--muted)}
+.qcard .qt{font-size:15px;line-height:1.5;color:#EAF1FF;white-space:pre-wrap;word-break:break-word}
+.qcard .qm{margin-top:9px;display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted)}
+.who{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:10.5px;padding:2px 8px;border-radius:999px;
+  background:rgba(34,211,238,.14);color:var(--cyan)}
+.who.judge{background:rgba(242,178,51,.16);color:var(--gold)}
+.qhide{position:absolute;top:11px;right:11px;width:28px;height:28px;border:0;border-radius:8px;cursor:pointer;
+  background:rgba(255,255,255,.07);color:var(--muted);font-size:15px;line-height:1;display:grid;place-items:center}
+.qhide:hover{background:rgba(255,107,107,.2);color:#fff}
+.wall-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--line-2);border-radius:14px}
+.cnt[hidden],.btn[hidden]{display:none}
+.cnt{margin-left:6px;min-width:19px;height:19px;padding:0 6px;border-radius:999px;background:var(--cyan);color:#04121f;
+  font-size:11px;font-weight:800;display:inline-grid;place-items:center}
+
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);background:var(--navy-700);
   border:1px solid var(--line-2);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;
   opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:100}
@@ -242,6 +274,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
       <button class="btn" id="next" title="Next build (→)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
+      <button class="btn" id="wallBtn" title="Audience questions from the form">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H8l-5 3 1.6-4.4A8 8 0 1 1 21 12z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 9.4a2.8 2.8 0 1 1 3.6 2.7v1.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="12.8" cy="16.4" r="1" fill="currentColor"/></svg>
+        <span class="lb">Questions</span><span class="cnt" id="wallCnt" hidden>0</span>
+      </button>
       <button class="btn gold" id="faqBtn" title="FAQ form and QR code">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 14h3v3h-3zM20 14h1M14 20h3M20 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span class="lb">FAQ</span>
@@ -264,10 +300,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
             <h2>FAQ &amp; live questions</h2>
             <p>The QR code on slide 42 opens this form. It carries the ten questions the team is asked most, with full answers, then three quick questions for the audience.</p>
             <ol class="steps">
-              <li><span class="num">1</span><span><b>On stage</b>Press → on slide 42 to reveal the QR panel, then invite the floor to scan it.</span></li>
+              <li><span class="num">1</span><span><b>On stage</b>Slide 42 shows the QR panel the moment it opens, so simply arrive and invite the floor to scan it.</span></li>
               <li><span class="num">2</span><span><b>They read</b>Ten FAQs with answers: funding, bank costs, income protection, employer fairness, timeline, the guarantee, partial displacement, measurement.</span></li>
               <li><span class="num">3</span><span><b>They answer</b>Which option they would have chosen, how convinced they are (1–5), and a free-text question for the team.</span></li>
-              <li><span class="num">4</span><span><b>You watch live</b>Open the form's Responses tab on a second device; charts update as answers arrive.</span></li>
+              <li><span class="num">4</span><span><b>You watch live</b>Open the Questions tab in this portal. Every question typed into the form lands there within seconds.</span></li>
             </ol>
             <p style="margin-top:20px">
               <a class="btn gold" href="https://forms.gle/kymW1VEAELBHAVYa9" target="_blank" rel="noopener">Open the form ↗</a>
@@ -281,6 +317,22 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
           </div>
         </div>
       </section>
+
+      <section class="wall" id="wallView" aria-label="Audience questions">
+        <div class="wall-in">
+          <div class="wall-hd">
+            <div>
+              <h2>Audience questions <span class="live" id="wallLive">live</span></h2>
+              <p>Everything typed into <b>Ask the team a question</b> on the form lands here within seconds. Newest first. Nothing else from the form is shown.</p>
+            </div>
+            <div class="wall-act">
+              <button class="btn" id="wallRefresh">Refresh now</button>
+              <button class="btn" id="wallToggleHid" hidden>Show hidden (<span id="wallHidN">0</span>)</button>
+            </div>
+          </div>
+          <div class="wall-list" id="wallList"></div>
+        </div>
+      </section>
     </div>
   </main>
 </div>
@@ -289,7 +341,7 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 
 <script>
 const ACTS={"1":"The Human Absence","2":"What AI Changes","3":"This Concern Is Not New","4":"Evidence from Banking","5":"The Transition Gap","6":"The Scale and the Policy Question","7":"The UPSHIFT Framework","8":"Expected Impact and Closing"};
-const SLIDES=[{"n":1,"id":"cover","act":1,"title":"The Automated Financial Sector","builds":2},{"n":2,"id":"empty-bank","act":1,"title":"Where are the people?","builds":2},{"n":3,"id":"stakes","act":1,"title":"The people · The jobs · The future of our economy","builds":3},{"n":4,"id":"begun","act":1,"title":"A transition that has already begun","builds":1},{"n":5,"id":"villain","act":1,"title":"Is AI the villain?","builds":1},{"n":6,"id":"ai-can","act":2,"title":"What can artificial intelligence do?","builds":4},{"n":7,"id":"finance","act":2,"title":"How does AI work in the financial sector?","builds":4},{"n":8,"id":"thesis","act":2,"title":"The problem is not technological progress","builds":2},{"n":9,"id":"not-new","act":3,"title":"This concern isn’t new","builds":1},{"n":10,"id":"history","act":3,"title":"The Luddites · Swing Riots","builds":2},{"n":11,"id":"question","act":3,"title":"The technology has changed","builds":2},{"n":12,"id":"timeline","act":3,"title":"Technology has changed again","builds":4},{"n":13,"id":"task-job","act":3,"title":"Fiction vs fact · TASK ≠ JOB","builds":3},{"n":14,"id":"erica","act":4,"title":"Bank of America introduced Erica","builds":4},{"n":15,"id":"bofa-90","act":4,"title":"More than 90% of employees use its AI assistant","builds":3},{"n":16,"id":"malaysia","act":4,"title":"Malaysia · MyMahir workforce survey","builds":4},{"n":17,"id":"affected","act":4,"title":"Affected doesn’t mean unemployed","builds":2},{"n":18,"id":"roles","act":4,"title":"Tasks can change · Roles are redesigned","builds":3},{"n":19,"id":"priority","act":4,"title":"More than 87% prioritise upskilling and reskilling","builds":3},{"n":20,"id":"change","act":4,"title":"Change is already coming","builds":1},{"n":21,"id":"gap","act":5,"title":"The transition gap","builds":5},{"n":22,"id":"einstein","act":5,"title":"Albert Einstein","builds":1},{"n":23,"id":"not-choice","act":5,"title":"Not a choice between progress and security","builds":2},{"n":24,"id":"case-2","act":6,"title":"The case, restated","builds":1},{"n":25,"id":"by-2030","act":6,"title":"By 2030: 300 million jobs could be affected","builds":2},{"n":26,"id":"goldman","act":6,"title":"Goldman Sachs Research","builds":2},{"n":27,"id":"promises","act":6,"title":"AI promises","builds":4},{"n":28,"id":"central","act":6,"title":"The central question","builds":1},{"n":29,"id":"options","act":6,"title":"Three commonly presented responses","builds":4},{"n":30,"id":"proposal","act":7,"title":"Our proposal · UPSHIFT Framework","builds":2},{"n":31,"id":"definition","act":7,"title":"UPSHIFT definition and purpose","builds":2},{"n":32,"id":"components","act":7,"title":"The five S-H-I-F-T components","builds":6},{"n":33,"id":"without","act":7,"title":"Without UPSHIFT","builds":8},{"n":34,"id":"with","act":7,"title":"With UPSHIFT","builds":8},{"n":35,"id":"h","act":7,"title":"H · Human Capital Protection Policy","builds":3},{"n":36,"id":"i","act":7,"title":"I · Income Transition Protection","builds":5},{"n":37,"id":"s","act":7,"title":"S · Sector-Based Reskilling Programme","builds":4},{"n":38,"id":"f","act":7,"title":"F · Future Workforce Transition Fund","builds":3},{"n":39,"id":"t","act":7,"title":"T · Transition-to-Employment Guarantee","builds":5},{"n":40,"id":"impact","act":8,"title":"Expected impact: three horizons","builds":3},{"n":41,"id":"conclusion","act":8,"title":"Don’t stop progress. UPSHIFT people with it.","builds":3},{"n":42,"id":"end","act":8,"title":"Official identity · FAQ QR code","builds":2}];
+const SLIDES=[{"n":1,"id":"cover","act":1,"title":"The Automated Financial Sector","builds":2},{"n":2,"id":"empty-bank","act":1,"title":"Where are the people?","builds":2},{"n":3,"id":"stakes","act":1,"title":"The people · The jobs · The future of our economy","builds":3},{"n":4,"id":"begun","act":1,"title":"A transition that has already begun","builds":1},{"n":5,"id":"villain","act":1,"title":"Is AI the villain?","builds":1},{"n":6,"id":"ai-can","act":2,"title":"What can artificial intelligence do?","builds":4},{"n":7,"id":"finance","act":2,"title":"How does AI work in the financial sector?","builds":4},{"n":8,"id":"thesis","act":2,"title":"The problem is not technological progress","builds":2},{"n":9,"id":"not-new","act":3,"title":"This concern isn’t new","builds":1},{"n":10,"id":"history","act":3,"title":"The Luddites · Swing Riots","builds":2},{"n":11,"id":"question","act":3,"title":"The technology has changed","builds":2},{"n":12,"id":"timeline","act":3,"title":"Technology has changed again","builds":4},{"n":13,"id":"task-job","act":3,"title":"Fiction vs fact · TASK ≠ JOB","builds":3},{"n":14,"id":"erica","act":4,"title":"Bank of America introduced Erica","builds":4},{"n":15,"id":"bofa-90","act":4,"title":"More than 90% of employees use its AI assistant","builds":3},{"n":16,"id":"malaysia","act":4,"title":"Malaysia · MyMahir workforce survey","builds":4},{"n":17,"id":"affected","act":4,"title":"Affected doesn’t mean unemployed","builds":2},{"n":18,"id":"roles","act":4,"title":"Tasks can change · Roles are redesigned","builds":3},{"n":19,"id":"priority","act":4,"title":"More than 87% prioritise upskilling and reskilling","builds":3},{"n":20,"id":"change","act":4,"title":"Change is already coming","builds":1},{"n":21,"id":"gap","act":5,"title":"The transition gap","builds":5},{"n":22,"id":"einstein","act":5,"title":"Albert Einstein","builds":1},{"n":23,"id":"not-choice","act":5,"title":"Not a choice between progress and security","builds":2},{"n":24,"id":"case-2","act":6,"title":"The case, restated","builds":1},{"n":25,"id":"by-2030","act":6,"title":"By 2030: 300 million jobs could be affected","builds":2},{"n":26,"id":"goldman","act":6,"title":"Goldman Sachs Research","builds":2},{"n":27,"id":"promises","act":6,"title":"AI promises","builds":4},{"n":28,"id":"central","act":6,"title":"The central question","builds":1},{"n":29,"id":"options","act":6,"title":"Three commonly presented responses","builds":4},{"n":30,"id":"proposal","act":7,"title":"Our proposal · UPSHIFT Framework","builds":2},{"n":31,"id":"definition","act":7,"title":"UPSHIFT definition and purpose","builds":2},{"n":32,"id":"components","act":7,"title":"The five S-H-I-F-T components","builds":6},{"n":33,"id":"without","act":7,"title":"Without UPSHIFT","builds":8},{"n":34,"id":"with","act":7,"title":"With UPSHIFT","builds":8},{"n":35,"id":"h","act":7,"title":"H · Human Capital Protection Policy","builds":3},{"n":36,"id":"i","act":7,"title":"I · Income Transition Protection","builds":5},{"n":37,"id":"s","act":7,"title":"S · Sector-Based Reskilling Programme","builds":4},{"n":38,"id":"f","act":7,"title":"F · Future Workforce Transition Fund","builds":3},{"n":39,"id":"t","act":7,"title":"T · Transition-to-Employment Guarantee","builds":5},{"n":40,"id":"impact","act":8,"title":"Expected impact: three horizons","builds":3},{"n":41,"id":"conclusion","act":8,"title":"Don’t stop progress. UPSHIFT people with it.","builds":3},{"n":42,"id":"end","act":8,"title":"Official identity · FAQ QR code","builds":1}];
 
 const QR_FAQ="<svg width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 35 35\" shape-rendering=\"crispEdges\"><path fill=\"#FFFFFF\" d=\"M0 0h35v35H0z\"/><path stroke=\"#0B1530\" d=\"M1 1.5h7m2 0h1m1 0h1m1 0h1m1 0h4m2 0h2m1 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h3m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m6 0h3m2 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h5m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h8m1 0h2m1 0h4m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m3 0h2m1 0h2m3 0h1m5 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2m7 0h5M3 9.5h1m2 0h4m1 0h5m3 0h1m1 0h1m1 0h4m1 0h5M9 10.5h2m1 0h3m2 0h1m1 0h1m2 0h3m1 0h3m1 0h2m1 0h1M1 11.5h4m2 0h1m1 0h3m2 0h1m3 0h1m3 0h1m5 0h2m3 0h1M6 12.5h1m2 0h1m1 0h2m1 0h1m2 0h3m1 0h1m3 0h2m1 0h1m1 0h1m2 0h1M2 13.5h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h4m1 0h2m1 0h3m1 0h1m2 0h1m2 0h1M5 14.5h1m5 0h1m1 0h2m3 0h1m3 0h1m1 0h5m4 0h1M1 15.5h2m1 0h5m3 0h1m4 0h1m1 0h1m4 0h2m2 0h2m1 0h1m1 0h1M3 16.5h1m2 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h4m3 0h3M2 17.5h2m3 0h4m4 0h1m2 0h1m1 0h1m2 0h1m2 0h3m2 0h1m1 0h1M1 18.5h2m2 0h2m2 0h1m3 0h1m6 0h1m1 0h1m1 0h1m2 0h2m2 0h1M2 19.5h1m1 0h1m1 0h2m3 0h2m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m2 0h3m1 0h1M1 20.5h1m2 0h1m1 0h1m1 0h2m3 0h1m2 0h1m2 0h1m4 0h1m1 0h2m1 0h2m1 0h2M2 21.5h1m1 0h4m1 0h1m1 0h2m1 0h2m2 0h1m5 0h5m4 0h1M2 22.5h1m1 0h3m3 0h8m2 0h2m5 0h2m1 0h2m1 0h1M1 23.5h4m1 0h2m1 0h2m1 0h1m2 0h1m2 0h1m3 0h2m1 0h4m3 0h2M3 24.5h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h2m2 0h1m2 0h1m5 0h1m1 0h1M1 25.5h3m1 0h1m1 0h2m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m1 0h5m3 0h1M9 26.5h2m1 0h1m2 0h1m2 0h1m1 0h2m3 0h1m3 0h1m1 0h1m1 0h1M1 27.5h7m1 0h5m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m3 0h1M1 28.5h1m5 0h1m1 0h3m3 0h1m7 0h3m3 0h2m1 0h2M1 29.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h7M1 30.5h1m1 0h3m1 0h1m4 0h2m5 0h1m1 0h1m4 0h1m1 0h5M1 31.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h2m2 0h2m3 0h2m1 0h2M1 32.5h1m5 0h1m2 0h3m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1M1 33.5h7m2 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m3 0h1m3 0h1\"/></svg>";
 const DECK='upshift-deck/';
@@ -298,7 +350,7 @@ const LINKS=[
    ic:'<path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h13A1.5 1.5 0 0 1 18 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 20h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'},
   {t:'FAQ form',s:'forms.gle/kymW1VEAELBHAVYa9',href:'https://forms.gle/kymW1VEAELBHAVYa9',ext:true,
    ic:'<rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'},
-  {t:'Slide 42 · QR',s:'Jumps to build 2, where the QR shows',slide:42,build:1,
+  {t:'Slide 42 · QR',s:'The QR shows the moment the slide opens',slide:42,build:1,
    ic:'<rect x="3" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 14h3v3h-3z" stroke="currentColor" stroke-width="1.8"/>'},
 ];
 
@@ -395,12 +447,13 @@ setInterval(()=>{
 },450);
 
 /* ---------- views ---------- */
-function showDeck(){ $('#faqView').classList.remove('on'); }
-function showFaq(){ $('#faqView').classList.add('on'); }
+function showDeck(){ $('#faqView').classList.remove('on'); $('#wallView').classList.remove('on'); }
+function showFaq(){ $('#wallView').classList.remove('on'); $('#faqView').classList.add('on'); }
+function showWall(){ $('#faqView').classList.remove('on'); $('#wallView').classList.add('on'); wallLoad(); }
 $('#faqBtn').addEventListener('click',()=>{
   $('#faqView').classList.contains('on')?showDeck():showFaq();
 });
-$('#toSlide42').addEventListener('click',()=>go(42,1));
+$('#toSlide42').addEventListener('click',()=>go(42,0));
 $('#home').addEventListener('click',()=>{ go(1,0); showDeck(); });
 function stepBuild(d){
   let n=cur, b=curB+d;
@@ -481,6 +534,86 @@ $('#scrim').addEventListener('click',closeSide);
 /* ---------- misc ---------- */
 frame.addEventListener('load',()=>{ $('#load').classList.add('gone'); probe(); });
 setTimeout(()=>$('#load').classList.add('gone'),4000);
+/* ---------- Audience question wall ----------------------------------------
+   Reads only three columns of the linked responses sheet (timestamp, the free
+   text question, and the role the person picked) through the Google
+   visualisation endpoint, so nothing else from the form is ever fetched.
+   Hiding is deliberately local to this browser: it is an emergency lid for the
+   screen in the room, not moderation of the form itself. */
+const WALL_ID='1rU8pbLwMhnAqnin61JlvAoWqB7Hli4lFj8yXKNcTiTw', WALL_GID='1534255187';
+const WALL_TQ='select A,D,E where D is not null order by A desc';
+const WALL_KEY='upshift.wall.hidden';
+let wallRows=[], wallShowHid=false, wallTimer=null, wallBusy=false;
+let wallHid=new Set((()=>{ try{ return JSON.parse(localStorage.getItem(WALL_KEY)||'[]'); }catch(e){ return []; } })());
+
+function wallSave(){ try{ localStorage.setItem(WALL_KEY,JSON.stringify([...wallHid])); }catch(e){} }
+function esc(t){ return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function wallKey(r){ return r.t+'|'+r.q.slice(0,90); }
+
+async function wallFetch(){
+  const u='https://docs.google.com/spreadsheets/d/'+WALL_ID+'/gviz/tq?tqx=out:json&gid='+WALL_GID
+        +'&tq='+encodeURIComponent(WALL_TQ)+'&_='+Date.now();
+  const res=await fetch(u,{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const txt=await res.text();
+  const a=txt.indexOf('{'), b=txt.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('bad response');
+  const rows=(JSON.parse(txt.slice(a,b+1)).table.rows)||[];
+  return rows.map(r=>{ const c=r.c||[];
+    return { t:(c[0]&&(c[0].f||c[0].v))||'', q:(c[1]&&c[1].v)?String(c[1].v):'', who:(c[2]&&c[2].v)?String(c[2].v):'' };
+  }).filter(x=>x.q.trim());
+}
+
+function wallRender(){
+  const list=$('#wallList');
+  const shown=wallRows.filter(r=>wallShowHid||!wallHid.has(wallKey(r)));
+  const nHid=wallRows.filter(r=>wallHid.has(wallKey(r))).length;
+  const tg=$('#wallToggleHid'); tg.hidden=!nHid; $('#wallHidN').textContent=nHid;
+  tg.textContent=(wallShowHid?'Hide again (':'Show hidden (')+nHid+')';
+  const live=wallRows.length-nHid;
+  const cnt=$('#wallCnt'); cnt.hidden=!live; cnt.textContent=live;
+  if(!shown.length){
+    list.innerHTML='<div class="wall-empty">No questions yet. They appear here the moment someone submits the form.</div>';
+    return;
+  }
+  list.innerHTML=shown.map(r=>{
+    const k=wallKey(r), hid=wallHid.has(k), who=r.who?esc(r.who):'';
+    const cls='who'+(/judge/i.test(r.who)?' judge':'');
+    return '<article class="qcard'+(hid?' hid':'')+'" data-k="'+esc(k)+'">'
+      +'<button class="qhide" title="'+(hid?'Show this again':'Hide this from the screen')+'" data-k="'+esc(k)+'">'+(hid?'↺':'×')+'</button>'
+      +'<div class="qt">'+esc(r.q)+'</div>'
+      +'<div class="qm">'+(who?'<span class="'+cls+'">'+who+'</span>':'')+'<span>'+esc(r.t)+'</span></div>'
+      +'</article>';
+  }).join('');
+}
+
+async function wallLoad(){
+  if(wallBusy) return; wallBusy=true;
+  const lv=$('#wallLive');
+  try{
+    wallRows=await wallFetch();
+    lv.classList.remove('off'); lv.textContent='live';
+    wallRender();
+  }catch(e){
+    lv.classList.add('off'); lv.textContent='offline';
+    if(!wallRows.length) $('#wallList').innerHTML='<div class="wall-empty">Cannot reach the response sheet right now. Check the connection, then press Refresh now.</div>';
+  }finally{ wallBusy=false; }
+}
+
+$('#wallBtn').addEventListener('click',()=>{
+  $('#wallView').classList.contains('on')?showDeck():showWall();
+});
+$('#wallRefresh').addEventListener('click',()=>{ wallLoad(); toast('Checked for new questions'); });
+$('#wallToggleHid').addEventListener('click',()=>{ wallShowHid=!wallShowHid; wallRender(); });
+$('#wallList').addEventListener('click',e=>{
+  const b=e.target.closest('.qhide'); if(!b) return;
+  const k=b.dataset.k;
+  if(wallHid.has(k)){ wallHid.delete(k); toast('Question shown again'); }
+  else { wallHid.add(k); toast('Hidden on this device only'); }
+  wallSave(); wallRender();
+});
+wallLoad(); wallTimer=setInterval(wallLoad,15000);
+
 $('#qrFaq').innerHTML=QR_FAQ;
 setCur(1,0);
 </script>
