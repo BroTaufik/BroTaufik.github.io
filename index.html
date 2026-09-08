@@ -214,6 +214,7 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
   .faq{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+.dsw{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 14px}.dsw-b{display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:9px 11px;border-radius:10px;border:1px solid var(--line,#2a3550);background:transparent;color:inherit;cursor:pointer;text-align:left;font:inherit}.dsw-b b{font-size:13px;letter-spacing:.04em}.dsw-b small{font-size:10.5px;opacity:.65}.dsw-b[aria-selected="true"]{background:#F2B233;border-color:#F2B233;color:#0B1530}.dsw-b[aria-selected="true"] small{opacity:.8}
 </style>
 </head>
 <body>
@@ -226,11 +227,11 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
           <svg viewBox="0 0 24 24" width="21" height="21"><path d="M4 17.5 12 6l8 11.5" fill="none" stroke="#F2B233" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <div>
-          <h1>UPSHIFT Portal</h1>
-          <p class="ev">NICTSeD 2026 · Semifinals</p>
+          <h1>NICTSeD Portal</h1>
+          <p class="ev" id="brandSub">NICTSeD 2026 · Semifinals</p>
         </div>
       </div>
-      <p class="ident">The Automated Financial Sector<br><b>SMK St Bernadette's Convent</b><br>Perak Darul Ridzuan · AEB2064</p>
+      <p class="ident"><span id="brandCase">The Automated Financial Sector</span><br><b>SMK St Bernadette's Convent</b><br>Perak Darul Ridzuan · AEB2064</p>
     </div>
 
     <div class="search">
@@ -242,10 +243,10 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
     </div>
 
     <nav class="nav" id="nav">
-      <div class="grp-h">Links</div>
+      <div class="dsw" id="dsw" role="tablist" aria-label="Choose deck"><button class="dsw-b" data-dk="upshift" role="tab"><b>UPSHIFT</b><small>Semifinals</small></button><button class="dsw-b" data-dk="mahir" role="tab"><b>MAHIR</b><small>Grand Final</small></button></div><div class="grp-h">Links</div>
       <div id="links"></div>
       <div class="grp-row">
-        <span class="grp-h">Deck · 42 slides · 8 acts</span>
+        <span class="grp-h" id="deckMeta">Deck · 42 slides · 8 acts</span>
         <button class="mini" id="toggleAll" aria-label="Expand all acts">Expand all</button>
       </div>
       <div id="acts"></div>
@@ -340,11 +341,29 @@ mark{background:rgba(242,178,51,.28);color:#FFD98A;border-radius:3px;padding:0 1
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const ACTS={"1":"The Human Absence","2":"What AI Changes","3":"This Concern Is Not New","4":"Evidence from Banking","5":"The Transition Gap","6":"The Scale and the Policy Question","7":"The UPSHIFT Framework","8":"Expected Impact and Closing"};
-const SLIDES=[{"n":1,"id":"cover","act":1,"title":"The Automated Financial Sector","builds":2},{"n":2,"id":"empty-bank","act":1,"title":"Where are the people?","builds":2},{"n":3,"id":"stakes","act":1,"title":"The people · The jobs · The future of our economy","builds":3},{"n":4,"id":"begun","act":1,"title":"A transition that has already begun","builds":1},{"n":5,"id":"villain","act":1,"title":"Is AI the villain?","builds":1},{"n":6,"id":"ai-can","act":2,"title":"What can artificial intelligence do?","builds":4},{"n":7,"id":"finance","act":2,"title":"How does AI work in the financial sector?","builds":4},{"n":8,"id":"thesis","act":2,"title":"The problem is not technological progress","builds":2},{"n":9,"id":"not-new","act":3,"title":"This concern isn’t new","builds":1},{"n":10,"id":"history","act":3,"title":"The Luddites · Swing Riots","builds":2},{"n":11,"id":"question","act":3,"title":"The technology has changed","builds":2},{"n":12,"id":"timeline","act":3,"title":"Technology has changed again","builds":4},{"n":13,"id":"task-job","act":3,"title":"Fiction vs fact · TASK ≠ JOB","builds":3},{"n":14,"id":"erica","act":4,"title":"Bank of America introduced Erica","builds":4},{"n":15,"id":"bofa-90","act":4,"title":"More than 90% of employees use its AI assistant","builds":3},{"n":16,"id":"malaysia","act":4,"title":"Malaysia · MyMahir workforce survey","builds":4},{"n":17,"id":"affected","act":4,"title":"Affected doesn’t mean unemployed","builds":2},{"n":18,"id":"roles","act":4,"title":"Tasks can change · Roles are redesigned","builds":3},{"n":19,"id":"priority","act":4,"title":"More than 87% prioritise upskilling and reskilling","builds":3},{"n":20,"id":"change","act":4,"title":"Change is already coming","builds":1},{"n":21,"id":"gap","act":5,"title":"The transition gap","builds":5},{"n":22,"id":"einstein","act":5,"title":"Albert Einstein","builds":1},{"n":23,"id":"not-choice","act":5,"title":"Not a choice between progress and security","builds":2},{"n":24,"id":"case-2","act":6,"title":"The case, restated","builds":1},{"n":25,"id":"by-2030","act":6,"title":"By 2030: 300 million jobs could be affected","builds":2},{"n":26,"id":"goldman","act":6,"title":"Goldman Sachs Research","builds":2},{"n":27,"id":"promises","act":6,"title":"AI promises","builds":4},{"n":28,"id":"central","act":6,"title":"The central question","builds":1},{"n":29,"id":"options","act":6,"title":"Three commonly presented responses","builds":4},{"n":30,"id":"proposal","act":7,"title":"Our proposal · UPSHIFT Framework","builds":2},{"n":31,"id":"definition","act":7,"title":"UPSHIFT definition and purpose","builds":2},{"n":32,"id":"components","act":7,"title":"The five S-H-I-F-T components","builds":6},{"n":33,"id":"without","act":7,"title":"Without UPSHIFT","builds":8},{"n":34,"id":"with","act":7,"title":"With UPSHIFT","builds":8},{"n":35,"id":"h","act":7,"title":"H · Human Capital Protection Policy","builds":3},{"n":36,"id":"i","act":7,"title":"I · Income Transition Protection","builds":5},{"n":37,"id":"s","act":7,"title":"S · Sector-Based Reskilling Programme","builds":4},{"n":38,"id":"f","act":7,"title":"F · Future Workforce Transition Fund","builds":3},{"n":39,"id":"t","act":7,"title":"T · Transition-to-Employment Guarantee","builds":5},{"n":40,"id":"impact","act":8,"title":"Expected impact: three horizons","builds":3},{"n":41,"id":"conclusion","act":8,"title":"Don’t stop progress. UPSHIFT people with it.","builds":3},{"n":42,"id":"end","act":8,"title":"Official identity · FAQ QR code","builds":1}];
+const IC={
+  screen:'<path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h13A1.5 1.5 0 0 1 18 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 20h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+  form:'<rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+  qr:'<rect x="3" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 14h3v3h-3z" stroke="currentColor" stroke-width="1.8"/>'
+};
+const DECKS={
+  upshift:{path:'upshift-deck/',label:'UPSHIFT',round:'Semifinals',sub:'The Automated Financial Sector',
+    links:[{t:'Deck live',s:'Full tab, with a Portal button',href:'upshift-deck/?hub=1',ext:true,ic:IC.screen},
+           {t:'FAQ form',s:'forms.gle/kymW1VEAELBHAVYa9',href:'https://forms.gle/kymW1VEAELBHAVYa9',ext:true,ic:IC.form},
+           {t:'Slide 42 · QR',s:'The QR shows the moment the slide opens',slide:42,build:1,ic:IC.qr}],
+    hash:(n,b)=>"#s"+n+(b?"."+b:""), acts:{"1":"The Human Absence","2":"What AI Changes","3":"This Concern Is Not New","4":"Evidence from Banking","5":"The Transition Gap","6":"The Scale and the Policy Question","7":"The UPSHIFT Framework","8":"Expected Impact and Closing"}, slides:[{"n":1,"id":"cover","act":1,"title":"The Automated Financial Sector","builds":2},{"n":2,"id":"empty-bank","act":1,"title":"Where are the people?","builds":2},{"n":3,"id":"stakes","act":1,"title":"The people · The jobs · The future of our economy","builds":3},{"n":4,"id":"begun","act":1,"title":"A transition that has already begun","builds":1},{"n":5,"id":"villain","act":1,"title":"Is AI the villain?","builds":1},{"n":6,"id":"ai-can","act":2,"title":"What can artificial intelligence do?","builds":4},{"n":7,"id":"finance","act":2,"title":"How does AI work in the financial sector?","builds":4},{"n":8,"id":"thesis","act":2,"title":"The problem is not technological progress","builds":2},{"n":9,"id":"not-new","act":3,"title":"This concern isn’t new","builds":1},{"n":10,"id":"history","act":3,"title":"The Luddites · Swing Riots","builds":2},{"n":11,"id":"question","act":3,"title":"The technology has changed","builds":2},{"n":12,"id":"timeline","act":3,"title":"Technology has changed again","builds":4},{"n":13,"id":"task-job","act":3,"title":"Fiction vs fact · TASK ≠ JOB","builds":3},{"n":14,"id":"erica","act":4,"title":"Bank of America introduced Erica","builds":4},{"n":15,"id":"bofa-90","act":4,"title":"More than 90% of employees use its AI assistant","builds":3},{"n":16,"id":"malaysia","act":4,"title":"Malaysia · MyMahir workforce survey","builds":4},{"n":17,"id":"affected","act":4,"title":"Affected doesn’t mean unemployed","builds":2},{"n":18,"id":"roles","act":4,"title":"Tasks can change · Roles are redesigned","builds":3},{"n":19,"id":"priority","act":4,"title":"More than 87% prioritise upskilling and reskilling","builds":3},{"n":20,"id":"change","act":4,"title":"Change is already coming","builds":1},{"n":21,"id":"gap","act":5,"title":"The transition gap","builds":5},{"n":22,"id":"einstein","act":5,"title":"Albert Einstein","builds":1},{"n":23,"id":"not-choice","act":5,"title":"Not a choice between progress and security","builds":2},{"n":24,"id":"case-2","act":6,"title":"The case, restated","builds":1},{"n":25,"id":"by-2030","act":6,"title":"By 2030: 300 million jobs could be affected","builds":2},{"n":26,"id":"goldman","act":6,"title":"Goldman Sachs Research","builds":2},{"n":27,"id":"promises","act":6,"title":"AI promises","builds":4},{"n":28,"id":"central","act":6,"title":"The central question","builds":1},{"n":29,"id":"options","act":6,"title":"Three commonly presented responses","builds":4},{"n":30,"id":"proposal","act":7,"title":"Our proposal · UPSHIFT Framework","builds":2},{"n":31,"id":"definition","act":7,"title":"UPSHIFT definition and purpose","builds":2},{"n":32,"id":"components","act":7,"title":"The five S-H-I-F-T components","builds":6},{"n":33,"id":"without","act":7,"title":"Without UPSHIFT","builds":8},{"n":34,"id":"with","act":7,"title":"With UPSHIFT","builds":8},{"n":35,"id":"h","act":7,"title":"H · Human Capital Protection Policy","builds":3},{"n":36,"id":"i","act":7,"title":"I · Income Transition Protection","builds":5},{"n":37,"id":"s","act":7,"title":"S · Sector-Based Reskilling Programme","builds":4},{"n":38,"id":"f","act":7,"title":"F · Future Workforce Transition Fund","builds":3},{"n":39,"id":"t","act":7,"title":"T · Transition-to-Employment Guarantee","builds":5},{"n":40,"id":"impact","act":8,"title":"Expected impact: three horizons","builds":3},{"n":41,"id":"conclusion","act":8,"title":"Don’t stop progress. UPSHIFT people with it.","builds":3},{"n":42,"id":"end","act":8,"title":"Official identity · FAQ QR code","builds":1}]},
+  mahir:{path:'mahir-deck/',label:'MAHIR',round:'Grand Final',sub:'AI Nation 2030',
+    links:[{t:'Deck live',s:'Full tab, with a Portal button',href:'mahir-deck/?hub=1',ext:true,ic:IC.screen},
+           {t:'FAQ form',s:'forms.gle/kymW1VEAELBHAVYa9',href:'https://forms.gle/kymW1VEAELBHAVYa9',ext:true,ic:IC.form},
+           {t:'Evidence bank',s:'Slides 22 to 30, for Q&A',slide:22,build:0,ic:IC.qr}],
+    hash:(n,b)=>"#"+n, acts:{"1": "Opening", "2": "The plan", "3": "The evidence", "4": "MAHIR framework", "5": "M · Manage AI Responsibly", "6": "R · Respecting Human Dignity", "7": "A · I · H · Accountability", "8": "Close", "9": "Evidence bank (Q&A)"}, slides:[{"n": 1, "act": 1, "title": "AI NATION 2030", "builds": 1}, {"n": 2, "act": 1, "title": "Second in the world for deepfake losses", "builds": 1}, {"n": 3, "act": 1, "title": "The whole question hides in one word", "builds": 1}, {"n": 4, "act": 2, "title": "AI Nation 2030 is a live government document", "builds": 1}, {"n": 5, "act": 2, "title": "What the plan commits to", "builds": 1}, {"n": 6, "act": 2, "title": "The half that is still being written", "builds": 1}, {"n": 7, "act": 2, "title": "One plan, built in two stages", "builds": 1}, {"n": 8, "act": 2, "title": "AI Nation 2030 already tells Malaysia where to go. MAHIR is how we make sure nobody is left behind on the way.", "builds": 1}, {"n": 9, "act": 3, "title": "A real start against a very large number", "builds": 1}, {"n": 10, "act": 3, "title": "Access is nearly solved. Capability and protection are next.", "builds": 1}, {"n": 11, "act": 3, "title": "Malaysia has already legislated harder things", "builds": 1}, {"n": 12, "act": 3, "title": "A delivery rider can already contest an algorithm", "builds": 1}, {"n": 13, "act": 4, "title": "MAHIR: five blocks, five questions", "builds": 1}, {"n": 14, "act": 5, "title": "Classify the system before you deploy it", "builds": 1}, {"n": 15, "act": 5, "title": "Assess the impact, then keep a human in the loop", "builds": 1}, {"n": 16, "act": 6, "title": "Respect the person. Include every Malaysian.", "builds": 1}, {"n": 17, "act": 6, "title": "Reskill before retrenchment, not after", "builds": 1}, {"n": 18, "act": 7, "title": "Somebody’s name is on it, and everything is on the record", "builds": 1}, {"n": 19, "act": 7, "title": "What MAHIR would measure", "builds": 1}, {"n": 20, "act": 8, "title": "The same hiring system, run two ways", "builds": 1}, {"n": 21, "act": 8, "title": "Manage the technology. Respect the people. Keep every decision answerable to a human.", "builds": 1}, {"n": 22, "act": 9, "title": "Surfshark: two studies, one caveat", "builds": 1}, {"n": 23, "act": 9, "title": "AI Nation 2030: full architecture", "builds": 1}, {"n": 24, "act": 9, "title": "What is already in place", "builds": 1}, {"n": 25, "act": 9, "title": "The workforce numbers and their definitions", "builds": 1}, {"n": 26, "act": 9, "title": "What each Act actually does", "builds": 1}, {"n": 27, "act": 9, "title": "Three Malaysians in a queue", "builds": 1}, {"n": 28, "act": 9, "title": "Twelve questions a judge will ask", "builds": 1}, {"n": 29, "act": 9, "title": "How fast Malaysia moves once it decides", "builds": 1}, {"n": 30, "act": 9, "title": "Key sources", "builds": 1}]}
+};
+let DK=(new URLSearchParams(location.search).get('deck')==='mahir')?'mahir':'upshift';
+let ACTS=DECKS[DK].acts, SLIDES=DECKS[DK].slides, N=SLIDES.length;
+
 
 const QR_FAQ="<svg width=\"100%\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 35 35\" shape-rendering=\"crispEdges\"><path fill=\"#FFFFFF\" d=\"M0 0h35v35H0z\"/><path stroke=\"#0B1530\" d=\"M1 1.5h7m2 0h1m1 0h1m1 0h1m1 0h4m2 0h2m1 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m3 0h1m1 0h2m1 0h1m2 0h3m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h3m6 0h3m2 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h5m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h8m1 0h2m1 0h4m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m3 0h2m1 0h2m3 0h1m5 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2m7 0h5M3 9.5h1m2 0h4m1 0h5m3 0h1m1 0h1m1 0h4m1 0h5M9 10.5h2m1 0h3m2 0h1m1 0h1m2 0h3m1 0h3m1 0h2m1 0h1M1 11.5h4m2 0h1m1 0h3m2 0h1m3 0h1m3 0h1m5 0h2m3 0h1M6 12.5h1m2 0h1m1 0h2m1 0h1m2 0h3m1 0h1m3 0h2m1 0h1m1 0h1m2 0h1M2 13.5h1m1 0h1m1 0h2m1 0h1m2 0h1m2 0h4m1 0h2m1 0h3m1 0h1m2 0h1m2 0h1M5 14.5h1m5 0h1m1 0h2m3 0h1m3 0h1m1 0h5m4 0h1M1 15.5h2m1 0h5m3 0h1m4 0h1m1 0h1m4 0h2m2 0h2m1 0h1m1 0h1M3 16.5h1m2 0h1m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h4m3 0h3M2 17.5h2m3 0h4m4 0h1m2 0h1m1 0h1m2 0h1m2 0h3m2 0h1m1 0h1M1 18.5h2m2 0h2m2 0h1m3 0h1m6 0h1m1 0h1m1 0h1m2 0h2m2 0h1M2 19.5h1m1 0h1m1 0h2m3 0h2m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m2 0h3m1 0h1M1 20.5h1m2 0h1m1 0h1m1 0h2m3 0h1m2 0h1m2 0h1m4 0h1m1 0h2m1 0h2m1 0h2M2 21.5h1m1 0h4m1 0h1m1 0h2m1 0h2m2 0h1m5 0h5m4 0h1M2 22.5h1m1 0h3m3 0h8m2 0h2m5 0h2m1 0h2m1 0h1M1 23.5h4m1 0h2m1 0h2m1 0h1m2 0h1m2 0h1m3 0h2m1 0h4m3 0h2M3 24.5h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h2m2 0h1m2 0h1m5 0h1m1 0h1M1 25.5h3m1 0h1m1 0h2m2 0h2m1 0h1m4 0h1m1 0h1m1 0h1m1 0h5m3 0h1M9 26.5h2m1 0h1m2 0h1m2 0h1m1 0h2m3 0h1m3 0h1m1 0h1m1 0h1M1 27.5h7m1 0h5m1 0h1m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m3 0h1M1 28.5h1m5 0h1m1 0h3m3 0h1m7 0h3m3 0h2m1 0h2M1 29.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h7M1 30.5h1m1 0h3m1 0h1m4 0h2m5 0h1m1 0h1m4 0h1m1 0h5M1 31.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h2m2 0h2m3 0h2m1 0h2M1 32.5h1m5 0h1m2 0h3m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1M1 33.5h7m2 0h1m1 0h1m1 0h1m5 0h1m1 0h1m1 0h2m3 0h1m3 0h1\"/></svg>";
-const DECK='upshift-deck/';
+let DECK=DECKS[DK].path;
 const LINKS=[
   {t:'Deck live',s:'Full tab, with a Portal button',href:'upshift-deck/?hub=1',ext:true,
    ic:'<path d="M2 6.5A1.5 1.5 0 0 1 3.5 5h13A1.5 1.5 0 0 1 18 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 20h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'},
@@ -359,9 +378,9 @@ const frame=$('#deck'), nav=$('#nav');
 let cur=1, curB=0, sameOrigin=null;
 
 /* ---------- build the Links cluster ---------- */
-(function(){
-  const box=$('#links');
-  LINKS.forEach(l=>{
+function buildLinks(){
+  const box=$('#links'); box.innerHTML='';
+  (DECKS[DK].links||LINKS).forEach(l=>{
     const a=el(l.href?'a':'button','lnk');
     if(l.href){ a.href=l.href; if(l.ext){a.target='_blank';a.rel='noopener';} }
     a.innerHTML='<span class="ic"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">'+l.ic+'</svg></span>'+
@@ -371,14 +390,17 @@ let cur=1, curB=0, sameOrigin=null;
     if(l.slide) a.addEventListener('click',()=>go(l.slide,l.build||0));
     box.appendChild(a);
   });
-})();
+}
+buildLinks();
 
 /* ---------- build act clusters ---------- */
-(function(){
-  const box=$('#acts');
-  for(let a=1;a<=8;a++){
+function buildActs(){
+  const box=$('#acts'); box.innerHTML='';
+  const ids=Object.keys(ACTS).map(Number).sort((x,y)=>x-y);
+  for(const a of ids){
     const list=SLIDES.filter(s=>s.act===a);
-    const d=el('details','act'); d.dataset.act=a; if(a===1) d.open=true;
+    if(!list.length) continue;
+    const d=el('details','act'); d.dataset.act=a; if(a===ids[0]) d.open=true;
     const sum=el('summary','act-h');
     sum.innerHTML='<span class="act-n">'+a+'</span><span class="act-t"><b></b><small></small></span>'+
       '<span class="chev"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
@@ -395,6 +417,32 @@ let cur=1, curB=0, sameOrigin=null;
     });
     d.appendChild(body); box.appendChild(d);
   }
+}
+buildActs();
+
+function applyDeck(k){
+  DK=k; DECK=DECKS[k].path; ACTS=DECKS[k].acts; SLIDES=DECKS[k].slides; N=SLIDES.length;
+  sameOrigin=null; cur=1; curB=0;
+  document.querySelectorAll('.dsw-b').forEach(b=>b.setAttribute('aria-selected', b.dataset.dk===k?'true':'false'));
+  const sub=$('#brandSub'); if(sub) sub.textContent='NICTSeD 2026 · '+DECKS[k].round;
+  const dm=$('#deckMeta'); if(dm) dm.textContent='Deck · '+N+' slides · '+Object.keys(ACTS).length+' acts';
+  buildActs(); buildLinks();
+  const bc=$('#brandCase'); if(bc) bc.textContent=DECKS[k].sub;
+  frame.src=DECK+'?hub=1'+DECKS[k].hash(1,0);
+  setCur(1,0); syncPresent();
+  const u=new URL(location); if(k==='mahir') u.searchParams.set('deck','mahir'); else u.searchParams.delete('deck');
+  history.replaceState(null,'',u);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.dsw-b'); if(!b) return;
+  if(b.dataset.dk!==DK) applyDeck(b.dataset.dk);
+});
+document.querySelectorAll('.dsw-b').forEach(b=>b.setAttribute('aria-selected', b.dataset.dk===DK?'true':'false'));
+(function(){ const dm=document.querySelector('#deckMeta');
+  if(dm) dm.textContent='Deck · '+N+' slides · '+Object.keys(ACTS).length+' acts';
+  const sub=document.querySelector('#brandSub'); if(sub) sub.textContent='NICTSeD 2026 · '+DECKS[DK].round;
+  const bc=document.querySelector('#brandCase'); if(bc) bc.textContent=DECKS[DK].sub;
+  if(DK!=='upshift'){ const f=document.querySelector('#deck'); if(f) f.src=DECKS[DK].path+'?hub=1'+DECKS[DK].hash(1,0); }
 })();
 
 /* ---------- iframe navigation (same-origin when live, src fallback otherwise) ---------- */
@@ -404,9 +452,9 @@ function probe(){
   return sameOrigin;
 }
 function go(n,b){
-  n=Math.min(42,Math.max(1,n));
+  n=Math.min(N,Math.max(1,n));
   b=Math.min(SLIDES[n-1].builds-1,Math.max(0,b|0));
-  const hash='#s'+n+(b?'.'+b:'');
+  const hash=DECKS[DK].hash(n,b);
   if(probe()){
     try{ frame.contentWindow.location.hash=hash; }
     catch(e){ frame.src=DECK+'?hub=1'+hash; }
@@ -420,7 +468,7 @@ function setCur(n,b){
   const s=SLIDES[n-1]; if(!s) return;
   cur=n; curB=Math.min(s.builds-1,Math.max(0,b|0));
   $('#nowT').textContent=s.title;
-  $('#nowS').textContent='Slide '+n+' of 42 · Act '+s.act+' · '+ACTS[s.act]+(s.builds>1?' · build '+(curB+1)+'/'+s.builds:'');
+  $('#nowS').textContent='Slide '+n+' of '+N+' · Act '+s.act+' · '+ACTS[s.act]+(s.builds>1?' · build '+(curB+1)+'/'+s.builds:'');
   const pw=$('#pips'); pw.classList.toggle('single',s.builds<2); pw.innerHTML='';
   if(s.builds>1) for(let i=0;i<s.builds;i++){
     const d=el('button','pip'+(i===curB?' on':'')); d.title='Build '+(i+1)+' of '+s.builds;
@@ -458,7 +506,7 @@ $('#home').addEventListener('click',()=>{ go(1,0); showDeck(); });
 function stepBuild(d){
   let n=cur, b=curB+d;
   if(b<0){ if(n<=1) return; n--; b=SLIDES[n-1].builds-1; }
-  else if(b>SLIDES[n-1].builds-1){ if(n>=42) return; n++; b=0; }
+  else if(b>SLIDES[n-1].builds-1){ if(n>=N) return; n++; b=0; }
   go(n,b);
 }
 function stepSlide(d){ go(cur+d,0); }
@@ -466,7 +514,7 @@ $('#prev').addEventListener('click',()=>stepBuild(-1));
 $('#next').addEventListener('click',()=>stepBuild(1));
 
 /* keep the Present button pointing at the current slide, without ?hub */
-function syncPresent(){ $('#openFull').href=DECK+'#s'+cur+(curB?'.'+curB:''); }
+function syncPresent(){ $('#openFull').href=DECK+DECKS[DK].hash(cur,curB); }
 setInterval(syncPresent,500); syncPresent();
 
 /* ---------- expand / collapse all ---------- */
@@ -514,7 +562,7 @@ addEventListener('keydown',e=>{
   else if(e.key==='ArrowDown'){ e.preventDefault(); stepSlide(1); }
   else if(e.key==='ArrowUp'){ e.preventDefault(); stepSlide(-1); }
   else if(e.key==='Home'){ e.preventDefault(); go(1,0); }
-  else if(e.key==='End'){ e.preventDefault(); go(42,SLIDES[41].builds-1); }
+  else if(e.key==='End'){ e.preventDefault(); go(N,SLIDES[N-1].builds-1); }
 });
 
 /* ---------- copy ---------- */
